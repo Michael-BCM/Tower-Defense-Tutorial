@@ -1,32 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
-public class RoundsSurvived : MonoBehaviour {
+public class RoundsSurvived : MonoBehaviour
+{
+    [SerializeField]
+    private Text roundsText;
 
-	public Text roundsText;
+    private void OnEnable() //Called on the frame that a GameObject is enabled. 
+    {
+        StartCoroutine(AnimateText());
+    }
 
-	void OnEnable()
-	{
-		StartCoroutine(AnimateText());
-	}
+    IEnumerator AnimateText ()
+    {
+        roundsText.text = "0";
+        int round = 0;
 
-	IEnumerator AnimateText ()
-	{
-		roundsText.text = "0";
-		int round = 0;
+        yield return new WaitForSeconds(0.7f);
 
-		yield return new WaitForSeconds(.7f);
-
-		while (round < PlayerStats.Rounds)
-		{
-			round++;
-			roundsText.text = round.ToString();
-
-			yield return new WaitForSeconds(.05f);
-		}
-
-	}
-
+        while (round < PlayerStats.rounds)
+        {
+            round++;
+            roundsText.text = round.ToString();
+            yield return new WaitForSeconds(.1f);
+        }
+    }
 }
